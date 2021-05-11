@@ -35,13 +35,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(final HttpServletRequest request) {
         var token = request.getHeader("Authorization");
-        if (token != null) {
-            String user = JWT.require(Algorithm.HMAC512("SECRET"))
-                    .build()
-                    .verify(token.replace("Bearer", "")).getSubject();
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-            }
+        if (token == null) {
+            return null;
+        }
+
+        String user = JWT.require(Algorithm.HMAC512("SECRET"))
+                .build()
+                .verify(token.replace("Bearer", "").trim()).getSubject();
+
+        if (user != null) {
+            return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
         }
         return null;
     }

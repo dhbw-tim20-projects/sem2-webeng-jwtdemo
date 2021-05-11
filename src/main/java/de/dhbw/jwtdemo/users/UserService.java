@@ -7,6 +7,7 @@ import de.mkammerer.snowflakeid.SnowflakeIdGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +36,9 @@ public class UserService {
 
     public Optional<User> findByEmail(final String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    public List<User> findAll() {
+        return this.userRepository.findAll();
     }
 }
