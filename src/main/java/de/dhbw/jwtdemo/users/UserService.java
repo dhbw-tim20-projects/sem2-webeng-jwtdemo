@@ -7,6 +7,8 @@ import de.mkammerer.snowflakeid.SnowflakeIdGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private UserRepository userRepository;
@@ -29,5 +31,9 @@ public class UserService {
 
     public boolean isEmailUnique(final String email) {
         return this.userRepository.countByEmail(email) == 0;
+    }
+
+    public Optional<User> findByEmail(final String email) {
+        return this.userRepository.findByEmail(email);
     }
 }
